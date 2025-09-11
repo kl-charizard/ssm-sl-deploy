@@ -446,6 +446,32 @@ class ModelEvaluator:
         
         plt.show()
     
+    def get_per_class_accuracy(self) -> Dict[str, float]:
+        """Get per-class accuracy from evaluation results."""
+        if not self.evaluation_results:
+            print("No evaluation results available. Run evaluate_dataset first.")
+            return {}
+        
+        # Get predictions from results
+        if 'prediction_details' not in self.evaluation_results:
+            print("No prediction details available for per-class accuracy")
+            return {}
+        
+        true_labels = [d['true_label'] for d in self.evaluation_results['prediction_details']]
+        pred_labels = [d['predicted_label'] for d in self.evaluation_results['prediction_details']]
+        
+        # Calculate per-class accuracy
+        per_class_acc = {}
+        for i, class_name in enumerate(self.class_names):
+            true_mask = np.array(true_labels) == i
+            if true_mask.sum() > 0:
+                class_acc = (np.array(pred_labels)[true_mask] == i).mean()
+                per_class_acc[class_name] = class_acc
+            else:
+                per_class_acc[class_name] = 0.0
+        
+        return per_class_acc
+    
     def generate_evaluation_report(self, save_dir: str) -> str:
         """Generate a comprehensive evaluation report.
         
