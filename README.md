@@ -190,24 +190,38 @@ python demo.py image --model model.pth --image test.jpg --output result.png
 ## 📁 Project Structure
 
 ```
-├── README.md                 # This file
-├── requirements.txt          # Python dependencies
-├── config.yaml              # Configuration file
-├── train.py                 # Training script
-├── evaluate.py              # Evaluation script
-├── demo.py                  # Demo applications
-├── src/                     # Source code
-│   ├── data/                # Data loading and preprocessing
-│   ├── models/              # Model architectures
-│   ├── training/            # Training utilities
-│   ├── evaluation/          # Evaluation and analysis
-│   ├── demo/                # Demo applications
-│   ├── deployment/          # Model deployment utilities
-│   └── utils/               # Utility functions
-├── datasets/                # Dataset storage
-├── logs/                    # Training logs
-├── checkpoints/             # Model checkpoints
-└── examples/                # Usage examples
+├── 📚 Documentation
+│   ├── README.md                 # Main documentation (this file)
+│   ├── SETUP.md                  # Complete setup & deployment guide  
+│   └── TECH_OVERVIEW.md          # Technology introduction (MobileNet, TensorFlow, etc.)
+├── ⚙️ Configuration
+│   ├── requirements.txt          # Python dependencies
+│   ├── config.yaml              # Main configuration file
+│   └── Makefile                 # Build automation
+├── 🚀 Main Scripts
+│   ├── train.py                 # Training script
+│   ├── evaluate.py              # Evaluation script
+│   ├── demo.py                  # Demo applications
+│   └── run_jupyter.py           # Jupyter launcher
+├── 🧠 Core Framework
+│   └── src/                     # Source code
+│       ├── data/                # Data loading and preprocessing
+│       ├── models/              # Model architectures
+│       ├── training/            # Training utilities
+│       ├── evaluation/          # Evaluation and analysis
+│       ├── demo/                # Demo applications
+│       ├── deployment/          # Model deployment utilities
+│       └── utils/               # Utility functions
+├── 📊 Data & Results (created during use)
+│   ├── datasets/                # Dataset storage (download separately)
+│   ├── logs/                    # Training logs
+│   ├── checkpoints/             # Model checkpoints
+│   └── exports/                 # Exported models
+├── 🎯 Examples & Scripts
+│   ├── examples/                # Usage examples
+│   └── scripts/                 # Utility scripts (dataset download, etc.)
+└── 📝 Development
+    └── notebooks/               # Jupyter notebooks
 ```
 
 ## 🎯 Supported Datasets
@@ -389,9 +403,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Documentation**: [Full Documentation](docs/)
-- **Issues**: [GitHub Issues](https://github.com/yourorg/sign-language-detection/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourorg/sign-language-detection/discussions)
+- **📚 Setup Guide**: [SETUP.md](SETUP.md) - Complete installation & deployment instructions
+- **🔬 Technology Guide**: [TECH_OVERVIEW.md](TECH_OVERVIEW.md) - Deep dive into MobileNet, TensorFlow, and other technologies
+- **🐛 Issues**: [GitHub Issues](https://github.com/kl-charizard/ssm-sl-deploy/issues)
+- **💬 Discussions**: [GitHub Discussions](https://github.com/kl-charizard/ssm-sl-deploy/discussions)
 
 ## 🗺️ Roadmap
 
