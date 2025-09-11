@@ -83,7 +83,9 @@ class ModelEvaluator:
                     batch_preds = []
                     for img in images:
                         img_preds = []
-                        tta_imgs = tta_transforms(img.cpu().numpy())
+                        # Convert tensor to numpy in correct format [H, W, C]
+                        img_np = img.cpu().permute(1, 2, 0).numpy()
+                        tta_imgs = tta_transforms(img_np)
                         
                         for tta_img in tta_imgs:
                             tta_img = tta_img.unsqueeze(0).to(self.device)
