@@ -166,15 +166,30 @@ python train.py --model resnet50 --mixup-alpha 0.2 --cutmix-alpha 1.0 --epochs 1
 
 ### Evaluating a Model
 
+**Standard evaluation:**
+```bash
+python evaluate.py --model-path checkpoints/best_model.pth --dataset asl_alphabet
+```
+
+**With Test Time Augmentation (TTA) for improved accuracy:**
 ```bash
 python evaluate.py --model-path checkpoints/best_model.pth --dataset asl_alphabet --tta
+```
+
+**For Apple Silicon Macs (M1/M2), use CPU device:**
+```bash
+python evaluate.py --model-path checkpoints/best_model.pth --dataset asl_alphabet --device cpu
 ```
 
 ### Running Demos
 
 **Webcam demo:**
 ```bash
+# Standard webcam demo
 python demo.py webcam --model checkpoints/best_model.pth
+
+# For Apple Silicon Macs (M1/M2)
+python demo.py webcam --model checkpoints/best_model.pth --device cpu
 ```
 
 **Web application:**
@@ -184,7 +199,7 @@ python demo.py streamlit
 
 **Single image prediction:**
 ```bash
-python demo.py image --model model.pth --image test.jpg --output result.png
+python demo.py image --model checkpoints/best_model.pth --image test.jpg --output result.png
 ```
 
 ## 📁 Project Structure
@@ -407,6 +422,53 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **🔬 Technology Guide**: [TECH_OVERVIEW.md](TECH_OVERVIEW.md) - Deep dive into MobileNet, TensorFlow, and other technologies
 - **🐛 Issues**: [GitHub Issues](https://github.com/kl-charizard/ssm-sl-deploy/issues)
 - **💬 Discussions**: [GitHub Discussions](https://github.com/kl-charizard/ssm-sl-deploy/discussions)
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+#### Low Accuracy on Apple Silicon (M1/M2 Macs)
+**Problem**: Model shows very low accuracy (3-5%) on Apple Silicon Macs
+**Solution**: Use CPU device explicitly
+```bash
+# For evaluation
+python evaluate.py --model-path checkpoints/best_model.pth --dataset asl_alphabet --device cpu
+
+# For webcam demo
+python demo.py webcam --model checkpoints/best_model.pth --device cpu
+```
+
+#### PyTorch 2.6 Compatibility Issues
+**Problem**: `UnpicklingError` when loading model checkpoints
+**Solution**: Fixed in latest version - update your code:
+```bash
+git pull origin main
+pip install --upgrade -r requirements.txt
+```
+
+#### Slow Training on macOS
+**Problem**: Training is very slow on macOS
+**Solution**: Optimize data loading in `config.yaml`:
+```yaml
+system:
+  num_workers: 0  # Use single-threaded loading for MPS
+  pin_memory: false  # Disable for MPS
+  mixed_precision: false  # Disable for MPS
+```
+
+#### Import Errors
+**Problem**: `ModuleNotFoundError` for various packages
+**Solution**: Install all dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+### Performance Tips
+
+- **Apple Silicon**: Use `--device cpu` for evaluation and demos
+- **NVIDIA GPU**: Use `--device cuda` for faster training
+- **Memory Issues**: Reduce `batch_size` in `config.yaml`
+- **Slow Data Loading**: Set `num_workers: 0` in `config.yaml`
 
 ## 🗺️ Roadmap
 

@@ -57,6 +57,11 @@ export PYTORCH_ENABLE_MPS_FALLBACK=1
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 ```
 
+**⚠️ Important for Apple Silicon Users:**
+- **Training**: Works well with MPS acceleration
+- **Evaluation/Demos**: Use `--device cpu` to avoid compatibility issues
+- **Performance**: Set `num_workers: 0` in `config.yaml` for optimal performance
+
 ### Windows
 
 #### Prerequisites
@@ -191,9 +196,14 @@ drive.mount('/content/drive')
 # Quick training example
 !python train.py --dataset asl_alphabet --model efficientnet_b0 --epochs 10
 
-# Or run the webcam demo (if camera available)
+# Evaluate the trained model
+!python evaluate.py --model-path checkpoints/best_model.pth --dataset asl_alphabet
+
+# Run webcam demo (if camera available)
 !python demo.py webcam --model checkpoints/best_model.pth
 ```
+
+**Note**: Colab automatically uses GPU when available, so no device specification needed.
 
 ### AWS EC2
 ```bash
@@ -327,6 +337,25 @@ except Exception as e:
 
 ### Common Issues
 
+#### Low Accuracy on Apple Silicon (M1/M2 Macs)
+**Problem**: Model shows very low accuracy (3-5%) during evaluation
+**Solution**: Use CPU device explicitly
+```bash
+# For evaluation
+python evaluate.py --model-path checkpoints/best_model.pth --dataset asl_alphabet --device cpu
+
+# For webcam demo
+python demo.py webcam --model checkpoints/best_model.pth --device cpu
+```
+
+#### PyTorch 2.6 Compatibility Issues
+**Problem**: `UnpicklingError: Weights only load failed` when loading models
+**Solution**: Fixed in latest version - update your code:
+```bash
+git pull origin main
+pip install --upgrade -r requirements.txt
+```
+
 #### ImportError: No module named 'cv2'
 ```bash
 # Solution
@@ -356,8 +385,11 @@ chmod +x train.py evaluate.py demo.py
 
 #### Slow training on macOS
 ```bash
-# Disable MPS if causing issues
-export PYTORCH_ENABLE_MPS_FALLBACK=0
+# Optimize data loading in config.yaml
+system:
+  num_workers: 0  # Use single-threaded loading
+  pin_memory: false  # Disable for MPS
+  mixed_precision: false  # Disable for MPS
 ```
 
 ### Performance Optimization
