@@ -22,7 +22,7 @@ from ..utils.config import config
 def load_model(model_path: str, num_classes: int):
     """Load model with caching."""
     try:
-        checkpoint = torch.load(model_path, map_location='cpu')
+        checkpoint = torch.load(model_path, map_location='cpu', weights_only=False)
         
         # Try to determine architecture
         architecture = config.get('model.architecture', 'efficientnet_b0')

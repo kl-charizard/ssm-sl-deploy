@@ -150,7 +150,7 @@ class BaseSignLanguageModel(nn.Module, ABC):
         Returns:
             Tuple of (loaded_model, checkpoint_info)
         """
-        checkpoint = torch.load(filepath, map_location='cpu')
+        checkpoint = torch.load(filepath, map_location='cpu', weights_only=False)
         
         # Create model instance
         model = cls(num_classes=num_classes, **model_kwargs)

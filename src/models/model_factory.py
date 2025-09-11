@@ -217,7 +217,7 @@ def load_model_from_config(
     
     # Load checkpoint if provided
     if checkpoint_path:
-        checkpoint = torch.load(checkpoint_path, map_location='cpu')
+        checkpoint = torch.load(checkpoint_path, map_location='cpu', weights_only=False)
         model.load_state_dict(checkpoint['model_state_dict'])
         print(f"Loaded model checkpoint from {checkpoint_path}")
     

@@ -70,7 +70,7 @@ def load_model(model_path: str, architecture: str = None, num_classes: int = 29)
     """Load model from checkpoint."""
     print(f"Loading model from {model_path}...")
     
-    checkpoint = torch.load(model_path, map_location='cpu')
+    checkpoint = torch.load(model_path, map_location='cpu', weights_only=False)
     
     # Try to get architecture from checkpoint
     if 'model_info' in checkpoint:

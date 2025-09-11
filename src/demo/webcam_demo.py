@@ -75,7 +75,7 @@ class WebcamDemo:
             print(f"Loading model from {self.model_path}...")
             
             # Load checkpoint
-            checkpoint = torch.load(self.model_path, map_location='cpu')
+            checkpoint = torch.load(self.model_path, map_location='cpu', weights_only=False)
             
             # Get model configuration
             model_info = checkpoint.get('model_info', {})

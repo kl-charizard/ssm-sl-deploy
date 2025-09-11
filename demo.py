@@ -68,7 +68,7 @@ def load_model_and_classes(model_path: str):
     """Load model and get class names."""
     print(f"Loading model from {model_path}...")
     
-    checkpoint = torch.load(model_path, map_location='cpu')
+    checkpoint = torch.load(model_path, map_location='cpu', weights_only=False)
     
     # Get class names - try different sources
     class_names = None
