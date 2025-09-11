@@ -33,16 +33,15 @@ jupyter>=1.0.0
 ipywidgets>=8.0.0
 python-dotenv>=1.0.0
 pyyaml>=6.0.0
-argparse>=1.4.0
-pathlib2>=2.3.7
 requests>=2.31.0
+# Note: argparse and pathlib are part of Python standard library
 
 # Dataset downloading
 kaggle>=1.5.16
 
 # Cross-platform compatibility
 psutil>=5.9.0
-platform>=1.0.8
+# Note: platform is part of Python standard library
 
 # Web interface for demo (optional)
 streamlit>=1.25.0
