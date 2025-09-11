@@ -2,7 +2,7 @@
 torch>=2.0.0
 torchvision>=0.15.0
 tensorflow>=2.13.0
-tensorflow-lite>=2.13.0
+# Note: tensorflow-lite is included with tensorflow
 
 # Computer vision and image processing
 opencv-python>=4.8.0

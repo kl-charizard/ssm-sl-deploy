@@ -23,8 +23,8 @@ A comprehensive deep learning framework for training, evaluating, and deploying 
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourorg/sign-language-detection.git
-   cd sign-language-detection
+   git clone https://github.com/kl-charizard/ssm-sl-deploy.git
+   cd ssm-sl-deploy
    ```
 
 2. **Install dependencies**
