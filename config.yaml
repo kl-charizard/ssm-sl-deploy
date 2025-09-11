@@ -1,0 +1,81 @@
+# Sign Language Detection Training Configuration
+
+# Dataset Configuration
+dataset:
+  asl_alphabet:
+    path: "datasets/asl_alphabet"
+    classes: ["A", "B", "C", "D", "del", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "nothing", "O", "P", "Q", "R", "S", "space", "T", "U", "V", "W", "X", "Y", "Z"]
+    train_split: 0.8
+    val_split: 0.15
+    test_split: 0.05
+  
+  # Future datasets
+  wlasl:
+    path: "datasets/wlasl"
+    enabled: false
+  
+  custom:
+    path: "datasets/custom"
+    enabled: false
+
+# Training Configuration
+training:
+  batch_size: 32
+  epochs: 100
+  learning_rate: 0.001
+  optimizer: "adam"
+  scheduler: "cosine"
+  early_stopping_patience: 10
+  save_best_only: true
+  
+# Model Configuration
+model:
+  architecture: "efficientnet_b0"  # Options: resnet50, efficientnet_b0, mobilenet_v3, custom_cnn
+  input_size: [224, 224]
+  num_classes: 29
+  pretrained: true
+  dropout_rate: 0.2
+
+# Data Augmentation
+augmentation:
+  enabled: true
+  rotation_range: 15
+  width_shift_range: 0.1
+  height_shift_range: 0.1
+  shear_range: 0.1
+  zoom_range: 0.1
+  horizontal_flip: true
+  brightness_range: [0.8, 1.2]
+  
+# Cross-platform Settings
+system:
+  device: "auto"  # auto, cpu, cuda, mps
+  num_workers: 4
+  pin_memory: true
+  mixed_precision: true
+
+# Logging and Monitoring
+logging:
+  use_wandb: false
+  use_tensorboard: true
+  log_dir: "logs"
+  checkpoint_dir: "checkpoints"
+  
+# Quantization and Deployment
+deployment:
+  quantization:
+    enabled: false
+    method: "dynamic"  # dynamic, static, qat
+  
+  export_formats:
+    - "pytorch"
+    - "onnx"
+    - "tflite"
+    - "torchscript"
+
+# Demo Configuration
+demo:
+  camera_index: 0
+  window_size: [800, 600]
+  prediction_threshold: 0.5
+  display_fps: true
