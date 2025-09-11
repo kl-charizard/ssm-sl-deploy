@@ -34,6 +34,8 @@ def parse_args():
     # Webcam demo
     webcam_parser = subparsers.add_parser('webcam', help='Webcam demo')
     webcam_parser.add_argument('--model', required=True, help='Path to model checkpoint')
+    webcam_parser.add_argument('--device', type=str, default='auto', 
+                              help='Device to use (auto, cpu, cuda, mps)')
     webcam_parser.add_argument('--camera', type=int, default=0, help='Camera index')
     webcam_parser.add_argument('--confidence', type=float, default=0.5, 
                               help='Confidence threshold')
@@ -48,6 +50,8 @@ def parse_args():
     # Image demo
     image_parser = subparsers.add_parser('image', help='Single image demo')
     image_parser.add_argument('--model', required=True, help='Path to model checkpoint')
+    image_parser.add_argument('--device', type=str, default='auto',
+                              help='Device to use (auto, cpu, cuda, mps)')
     image_parser.add_argument('--image', required=True, help='Path to input image')
     image_parser.add_argument('--output', help='Path to save output image')
     image_parser.add_argument('--top-k', type=int, default=5, help='Show top-k predictions')
@@ -64,7 +68,20 @@ def parse_args():
     return parser.parse_args()
 
 
-def load_model_and_classes(model_path: str):
+def get_device(device_arg: str):
+    """Get the appropriate device based on argument and availability."""
+    if device_arg == 'auto':
+        if torch.cuda.is_available():
+            return 'cuda'
+        elif torch.backends.mps.is_available():
+            return 'mps'
+        else:
+            return 'cpu'
+    else:
+        return device_arg
+
+
+def load_model_and_classes(model_path: str, device: str = 'cpu'):
     """Load model and get class names."""
     print(f"Loading model from {model_path}...")
     
@@ -107,7 +124,10 @@ def load_model_and_classes(model_path: str):
 
 def webcam_demo(args):
     """Run webcam demo."""
-    model, class_names = load_model_and_classes(args.model)
+    device = get_device(args.device)
+    print(f"Using device: {device}")
+    
+    model, class_names = load_model_and_classes(args.model, device)
     
     demo = WebcamDemo(
         model_path=args.model,
@@ -115,7 +135,8 @@ def webcam_demo(args):
         camera_index=args.camera,
         confidence_threshold=args.confidence,
         smoothing_window=args.smoothing,
-        display_size=(args.width, args.height)
+        display_size=(args.width, args.height),
+        device=device
     )
     
     demo.run()

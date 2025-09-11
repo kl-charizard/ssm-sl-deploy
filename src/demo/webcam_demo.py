@@ -26,7 +26,8 @@ class WebcamDemo:
         camera_index: int = 0,
         confidence_threshold: float = 0.5,
         smoothing_window: int = 5,
-        display_size: tuple = (800, 600)
+        display_size: tuple = (800, 600),
+        device: str = 'auto'
     ):
         """Initialize webcam demo.
         
@@ -37,6 +38,7 @@ class WebcamDemo:
             confidence_threshold: Minimum confidence for predictions
             smoothing_window: Window size for prediction smoothing
             display_size: Display window size (width, height)
+            device: Device to use for inference (auto, cpu, cuda, mps)
         """
         self.model_path = model_path
         self.class_names = class_names
@@ -44,6 +46,17 @@ class WebcamDemo:
         self.confidence_threshold = confidence_threshold
         self.smoothing_window = smoothing_window
         self.display_size = display_size
+        
+        # Determine device
+        if device == 'auto':
+            if torch.cuda.is_available():
+                self.device = 'cuda'
+            elif torch.backends.mps.is_available():
+                self.device = 'mps'
+            else:
+                self.device = 'cpu'
+        else:
+            self.device = device
         
         # Initialize model and inference engine
         self.model = None
@@ -103,6 +116,7 @@ class WebcamDemo:
             self.inference_engine = InferenceEngine(
                 model=self.model,
                 class_names=self.class_names,
+                device=torch.device(self.device),
                 confidence_threshold=self.confidence_threshold,
                 smoothing_window=self.smoothing_window
             )
