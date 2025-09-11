@@ -40,8 +40,8 @@ python3.9 -m venv sign-lang-env
 source sign-lang-env/bin/activate
 
 # Clone repository
-git clone https://github.com/yourorg/sign-language-detection.git
-cd sign-language-detection
+git clone https://github.com/kl-charizard/ssm-sl-deploy.git
+cd ssm-sl-deploy
 
 # Install requirements
 pip install --upgrade pip setuptools wheel
@@ -72,8 +72,8 @@ python -m venv sign-lang-env
 sign-lang-env\Scripts\activate
 
 # Clone repository
-git clone https://github.com/yourorg/sign-language-detection.git
-cd sign-language-detection
+git clone https://github.com/kl-charizard/ssm-sl-deploy.git
+cd ssm-sl-deploy
 
 # Install requirements
 pip install --upgrade pip setuptools wheel
@@ -109,8 +109,8 @@ python3.9 -m venv sign-lang-env
 source sign-lang-env/bin/activate
 
 # Clone repository
-git clone https://github.com/yourorg/sign-language-detection.git
-cd sign-language-detection
+git clone https://github.com/kl-charizard/ssm-sl-deploy.git
+cd ssm-sl-deploy
 
 # Install requirements
 pip install --upgrade pip setuptools wheel
@@ -155,15 +155,44 @@ docker-compose exec app python train.py --dataset asl_alphabet
 ## ☁️ Cloud Environment Setup
 
 ### Google Colab
+
+**Quick Setup (Recommended):**
 ```python
-# Install in Colab
-!git clone https://github.com/yourorg/sign-language-detection.git
-%cd sign-language-detection
+# Clone repository and install dependencies
+!git clone https://github.com/kl-charizard/ssm-sl-deploy.git
+%cd ssm-sl-deploy
 !pip install -r requirements.txt
 
-# Mount Google Drive for datasets
+# Download ASL Alphabet dataset
+!python scripts/download_datasets.py --dataset asl_alphabet --output datasets/
+
+# Verify installation
+!python -c "import torch; print(f'PyTorch: {torch.__version__}')"
+!python -c "import torch; print(f'CUDA available: {torch.cuda.is_available()}')"
+```
+
+**With Google Drive (for persistent storage):**
+```python
+# Mount Google Drive
 from google.colab import drive
 drive.mount('/content/drive')
+
+# Clone to Drive for persistence
+!git clone https://github.com/kl-charizard/ssm-sl-deploy.git /content/drive/MyDrive/ssm-sl-deploy
+%cd /content/drive/MyDrive/ssm-sl-deploy
+!pip install -r requirements.txt
+
+# Download dataset to Drive
+!python scripts/download_datasets.py --dataset asl_alphabet --output datasets/
+```
+
+**Start Training in Colab:**
+```python
+# Quick training example
+!python train.py --dataset asl_alphabet --model efficientnet_b0 --epochs 10
+
+# Or run the webcam demo (if camera available)
+!python demo.py webcam --model checkpoints/best_model.pth
 ```
 
 ### AWS EC2
@@ -176,8 +205,8 @@ sudo apt update
 sudo apt install python3.9 python3.9-venv git
 
 # Clone and setup
-git clone https://github.com/yourorg/sign-language-detection.git
-cd sign-language-detection
+git clone https://github.com/kl-charizard/ssm-sl-deploy.git
+cd ssm-sl-deploy
 python3.9 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
@@ -395,107 +424,6 @@ python -c "from src import __version__; print(__version__)"
 # View changelog
 cat CHANGELOG.md
 ```
-
----
-
-## 🚀 GitHub Deployment & Repository Management
-
-### Deploying Your Project to GitHub
-
-Once your setup is complete, you may want to deploy your trained models and code to GitHub:
-
-#### Initialize Git Repository
-```bash
-# Initialize git in your project directory
-git init
-
-# Add all files (datasets excluded by .gitignore)
-git add .
-
-# Create commit with comprehensive message
-git commit -m "Sign Language Detection Framework Setup
-
-✨ Features:
-- Multi-architecture CNN models (EfficientNet, ResNet, MobileNet)
-- Cross-platform training pipeline (Mac, PC, Colab)
-- Real-time webcam demo and Streamlit web interface
-- Mobile deployment with quantization
-- Comprehensive evaluation suite"
-```
-
-#### Connect to GitHub
-```bash
-# Add your repository as remote origin
-git remote add origin https://github.com/yourusername/your-repo.git
-
-# Verify remote connection
-git remote -v
-
-# Push to GitHub
-git push origin main
-```
-
-#### Important: Dataset Management
-**⚠️ Datasets should NOT be uploaded to GitHub** due to:
-- Large file sizes (several GB)
-- GitHub file size limits
-- Licensing considerations
-
-Instead:
-- Use the included download script: `python scripts/download_datasets.py --dataset asl_alphabet`
-- Follow dataset download instructions in the main README
-- Keep datasets in local `datasets/` directory (excluded by `.gitignore`)
-
-### Repository Configuration
-
-#### Update Repository Settings
-1. **Description**: 
-   ```
-   🤟 Complete Sign Language Detection Framework - Train, optimize, and deploy CNN models with cross-platform support
-   ```
-
-2. **Topics/Tags**:
-   ```
-   sign-language, deep-learning, pytorch, computer-vision, cnn, mobile-deployment, accessibility
-   ```
-
-#### Create Releases
-```bash
-# Tag new version
-git tag -a v1.0.0 -m "Initial release: Complete Sign Language Detection Framework"
-
-# Push tags
-git push origin --tags
-```
-
-### Deployment Verification
-
-After deployment, verify everything works:
-
-1. **Test Repository Clone**:
-   ```bash
-   git clone https://github.com/yourusername/your-repo.git test-clone
-   cd test-clone
-   pip install -r requirements.txt
-   python examples/basic_training.py --help
-   ```
-
-2. **Test Dataset Download**:
-   ```bash
-   python scripts/download_datasets.py --dataset asl_alphabet
-   ```
-
-3. **Verify All Components**:
-   ```bash
-   # Test model creation
-   python -c "from src.models.model_factory import create_model; print('✅ Models work')"
-   
-   # Test data loading
-   python -c "from src.data.data_loader import create_data_loaders; print('✅ Data loaders work')"
-   
-   # Test training pipeline
-   python train.py --help
-   ```
 
 ---
 

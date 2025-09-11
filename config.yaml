@@ -73,6 +73,13 @@ deployment:
     - "tflite"
     - "torchscript"
 
+# System Configuration
+system:
+  device: "auto"  # auto, cpu, cuda, mps
+  num_workers: 0  # 0 for macOS/MPS, 2-4 for Linux/CUDA
+  pin_memory: false  # true for CUDA, false for MPS/CPU
+  mixed_precision: false  # Enable for faster training on compatible hardware
+
 # Demo Configuration
 demo:
   camera_index: 0
