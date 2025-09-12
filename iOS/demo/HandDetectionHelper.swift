@@ -33,7 +33,21 @@ class HandDetectionHelper {
             
             // Extract hand bounding box from keypoints
             let boundingBox = getHandBoundingBox(from: observation, in: pixelBuffer)
-            let image = UIImage(ciImage: CIImage(cvPixelBuffer: pixelBuffer))
+            
+            // Convert CVPixelBuffer to UIImage more reliably
+            let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
+            print("🖼️ Created CIImage with extent: \(ciImage.extent)")
+            
+            let context = CIContext()
+            guard let cgImage = context.createCGImage(ciImage, from: ciImage.extent) else {
+                print("❌ Failed to create CGImage from CIImage")
+                completion(nil)
+                return
+            }
+            print("✅ Successfully created CGImage: \(cgImage.width)x\(cgImage.height)")
+            
+            let image = UIImage(cgImage: cgImage)
+            print("✅ Successfully created UIImage from CGImage")
             
             // Crop hand region
             let croppedImage = cropHandRegion(from: image, boundingBox: boundingBox)
