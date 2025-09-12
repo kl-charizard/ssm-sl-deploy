@@ -19,18 +19,31 @@ A complete iOS app for real-time American Sign Language (ASL) alphabet recogniti
 
 ## How to Build
 
-1. **Open Xcode**:
+1. **Setup Models** (if needed):
+   ```bash
+   # Run the setup script to ensure models are ready
+   ./setup_models.sh
+   ```
+
+2. **Open Xcode**:
    ```bash
    open demo.xcodeproj
    ```
 
-2. **Select Target**:
+3. **Select Target**:
    - Choose iPhone simulator or device
    - Recommended: iPhone 15 or newer
 
-3. **Build & Run**:
+4. **Build & Run**:
    - Press ⌘+R or click the Run button
    - Grant camera permission when prompted
+
+## Troubleshooting
+
+- **"No Core ML model found in bundle"**: Run `./setup_models.sh` to convert and add models
+- **Camera Permission**: Make sure to grant camera access
+- **Model Loading**: Ensure .mlmodel files are in the app bundle
+- **Hand Detection**: Works best with clear hand visibility and good lighting
 
 ## App Structure
 

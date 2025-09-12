@@ -111,6 +111,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFB90E102E746AC800802E0A /* SignLanguageModel.mlmodel in Resources */,
+				CFB90E122E746AC800802E0A /* SignLanguageModel_optimized.mlmodel in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +347,8 @@
 		CFB90E0A2E746AC800802E0A /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB90DFC2E746AC700802E0A /* CameraManager.swift */; };
 		CFB90E0C2E746AC800802E0A /* HandDetectionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB90DFE2E746AC700802E0A /* HandDetectionHelper.swift */; };
 		CFB90E0E2E746AC800802E0A /* SignLanguageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB90E002E746AC700802E0A /* SignLanguageModel.swift */; };
+		CFB90E102E746AC800802E0A /* SignLanguageModel.mlmodel in Resources */ = {isa = PBXBuildFile; fileRef = CFB90E022E746AC700802E0A /* SignLanguageModel.mlmodel */; };
+		CFB90E122E746AC800802E0A /* SignLanguageModel_optimized.mlmodel in Resources */ = {isa = PBXBuildFile; fileRef = CFB90E042E746AC700802E0A /* SignLanguageModel_optimized.mlmodel */; };
 /* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CFB90DEE2E746AC700802E0A /* Project object */;
