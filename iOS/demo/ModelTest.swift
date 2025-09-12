@@ -25,12 +25,23 @@ class ModelTest {
             }
         }
         
-        // Try to find models
+        // Try to find models (Xcode compiles .mlmodel to .mlmodelc)
         let modelNames = ["SignLanguageModel", "SignLanguageModel_optimized"]
         
         for modelName in modelNames {
-            if let modelURL = Bundle.main.url(forResource: modelName, withExtension: "mlmodel") {
-                print("✅ Found \(modelName) at: \(modelURL)")
+            // Try .mlmodelc first (compiled version)
+            if let modelURL = Bundle.main.url(forResource: modelName, withExtension: "mlmodelc") {
+                print("✅ Found \(modelName) (compiled) at: \(modelURL)")
+                
+                do {
+                    let model = try MLModel(contentsOf: modelURL)
+                    print("✅ Successfully loaded \(modelName)")
+                    print("📊 Model description: \(model.modelDescription)")
+                } catch {
+                    print("❌ Failed to load \(modelName): \(error)")
+                }
+            } else if let modelURL = Bundle.main.url(forResource: modelName, withExtension: "mlmodel") {
+                print("✅ Found \(modelName) (source) at: \(modelURL)")
                 
                 do {
                     let model = try MLModel(contentsOf: modelURL)

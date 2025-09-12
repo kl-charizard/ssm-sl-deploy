@@ -34,7 +34,8 @@ class SignLanguageModel {
         }
         
         // Try to load the optimized model first, then fallback to regular model
-        if let optimizedModelURL = Bundle.main.url(forResource: "SignLanguageModel_optimized", withExtension: "mlmodel") {
+        // Xcode compiles .mlmodel files into .mlmodelc directories
+        if let optimizedModelURL = Bundle.main.url(forResource: "SignLanguageModel_optimized", withExtension: "mlmodelc") {
             print("🎯 Found optimized model at: \(optimizedModelURL)")
             do {
                 model = try MLModel(contentsOf: optimizedModelURL)
@@ -47,7 +48,7 @@ class SignLanguageModel {
             print("❌ Optimized model not found in bundle")
         }
         
-        if let modelURL = Bundle.main.url(forResource: "SignLanguageModel", withExtension: "mlmodel") {
+        if let modelURL = Bundle.main.url(forResource: "SignLanguageModel", withExtension: "mlmodelc") {
             print("🎯 Found regular model at: \(modelURL)")
             do {
                 model = try MLModel(contentsOf: modelURL)
