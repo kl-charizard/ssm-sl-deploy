@@ -15,6 +15,12 @@ struct HandDetectionOverlay: View {
     
     var body: some View {
         ZStack {
+            // Test overlay to verify drawing works
+            Rectangle()
+                .stroke(Color.red, lineWidth: 5)
+                .frame(width: 100, height: 100)
+                .position(x: 100, y: 100)
+            
             ForEach(Array(handObservations.enumerated()), id: \.offset) { index, observation in
                 // Draw bounding box
                 HandBoundingBoxView(observation: observation, imageSize: imageSize)
