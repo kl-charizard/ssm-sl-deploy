@@ -19,6 +19,10 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 30) {
+                // Test model loading on app start
+                .onAppear {
+                    ModelTest.testModelLoading()
+                }
                 // Header
                 VStack(spacing: 10) {
                     Image(systemName: "hand.raised.fill")

@@ -19,30 +19,49 @@ class SignLanguageModel {
     }
     
     private func loadModel() {
+        print("🔍 Searching for Core ML models in bundle...")
+        
+        // List all available resources for debugging
+        if let resourcePath = Bundle.main.resourcePath {
+            print("📁 Bundle resource path: \(resourcePath)")
+            do {
+                let contents = try FileManager.default.contentsOfDirectory(atPath: resourcePath)
+                let mlmodelFiles = contents.filter { $0.hasSuffix(".mlmodel") }
+                print("📄 Found .mlmodel files: \(mlmodelFiles)")
+            } catch {
+                print("❌ Error listing bundle contents: \(error)")
+            }
+        }
+        
         // Try to load the optimized model first, then fallback to regular model
         if let optimizedModelURL = Bundle.main.url(forResource: "SignLanguageModel_optimized", withExtension: "mlmodel") {
+            print("🎯 Found optimized model at: \(optimizedModelURL)")
             do {
                 model = try MLModel(contentsOf: optimizedModelURL)
                 print("✅ Loaded optimized Core ML model")
+                return
             } catch {
                 print("❌ Failed to load optimized model: \(error)")
             }
+        } else {
+            print("❌ Optimized model not found in bundle")
         }
         
-        if model == nil {
-            if let modelURL = Bundle.main.url(forResource: "SignLanguageModel", withExtension: "mlmodel") {
-                do {
-                    model = try MLModel(contentsOf: modelURL)
-                    print("✅ Loaded regular Core ML model")
-                } catch {
-                    print("❌ Failed to load model: \(error)")
-                }
+        if let modelURL = Bundle.main.url(forResource: "SignLanguageModel", withExtension: "mlmodel") {
+            print("🎯 Found regular model at: \(modelURL)")
+            do {
+                model = try MLModel(contentsOf: modelURL)
+                print("✅ Loaded regular Core ML model")
+                return
+            } catch {
+                print("❌ Failed to load regular model: \(error)")
             }
+        } else {
+            print("❌ Regular model not found in bundle")
         }
         
-        if model == nil {
-            print("❌ No Core ML model found in bundle")
-        }
+        print("❌ No Core ML model found in bundle")
+        print("💡 Make sure to run ./setup_models.sh to convert and add models")
     }
     
     func predict(image: UIImage, completion: @escaping (String, Double) -> Void) {
