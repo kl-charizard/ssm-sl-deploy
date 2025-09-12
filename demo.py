@@ -43,6 +43,12 @@ def parse_args():
                               help='Temporal smoothing window')
     webcam_parser.add_argument('--width', type=int, default=800, help='Display width')
     webcam_parser.add_argument('--height', type=int, default=600, help='Display height')
+    webcam_parser.add_argument('--no-hand-detection', action='store_true',
+                              help='Disable hand detection and use full frame')
+    webcam_parser.add_argument('--hand-confidence', type=float, default=0.5,
+                              help='Hand detection confidence threshold')
+    webcam_parser.add_argument('--preferred-hand', type=str, default='right',
+                              choices=['left', 'right'], help='Preferred hand for detection')
     
     # Streamlit app
     streamlit_parser = subparsers.add_parser('streamlit', help='Streamlit web app')
@@ -136,7 +142,10 @@ def webcam_demo(args):
         confidence_threshold=args.confidence,
         smoothing_window=args.smoothing,
         display_size=(args.width, args.height),
-        device=device
+        device=device,
+        enable_hand_detection=not args.no_hand_detection,
+        hand_detection_confidence=args.hand_confidence,
+        preferred_hand=args.preferred_hand
     )
     
     demo.run()

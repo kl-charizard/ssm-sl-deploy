@@ -10,8 +10,19 @@ from pathlib import Path
 from typing import Optional, Dict, Any, List
 import threading
 import queue
+import platform
+
+# Set OpenCV backend for macOS compatibility
+if platform.system() == 'Darwin':
+    try:
+        # Try to use the default backend first
+        pass
+    except:
+        # Fallback to other backends if needed
+        pass
 
 from .inference_engine import InferenceEngine
+from .hand_detector import HandDetector
 from ..models.model_factory import create_model, load_model_from_config
 from ..utils.config import config, Config
 
@@ -27,7 +38,10 @@ class WebcamDemo:
         confidence_threshold: float = 0.5,
         smoothing_window: int = 5,
         display_size: tuple = (800, 600),
-        device: str = 'auto'
+        device: str = 'auto',
+        enable_hand_detection: bool = True,
+        hand_detection_confidence: float = 0.5,
+        preferred_hand: str = 'right'
     ):
         """Initialize webcam demo.
         
@@ -39,6 +53,9 @@ class WebcamDemo:
             smoothing_window: Window size for prediction smoothing
             display_size: Display window size (width, height)
             device: Device to use for inference (auto, cpu, cuda, mps)
+            enable_hand_detection: Whether to use hand detection for cropping
+            hand_detection_confidence: Minimum confidence for hand detection
+            preferred_hand: Preferred hand for detection ('left' or 'right')
         """
         self.model_path = model_path
         self.class_names = class_names
@@ -46,6 +63,9 @@ class WebcamDemo:
         self.confidence_threshold = confidence_threshold
         self.smoothing_window = smoothing_window
         self.display_size = display_size
+        self.enable_hand_detection = enable_hand_detection
+        self.hand_detection_confidence = hand_detection_confidence
+        self.preferred_hand = preferred_hand
         
         # Determine device
         if device == 'auto':
@@ -57,6 +77,21 @@ class WebcamDemo:
                 self.device = 'cpu'
         else:
             self.device = device
+        
+        # Initialize hand detector
+        if self.enable_hand_detection:
+            try:
+                self.hand_detector = HandDetector(
+                    min_detection_confidence=self.hand_detection_confidence
+                )
+                print("Hand detection enabled")
+            except Exception as e:
+                print(f"Failed to initialize hand detection: {e}")
+                print("Disabling hand detection and using full frame")
+                self.hand_detector = None
+                self.enable_hand_detection = False
+        else:
+            self.hand_detector = None
         
         # Initialize model and inference engine
         self.model = None
@@ -130,9 +165,19 @@ class WebcamDemo:
     def setup_camera(self):
         """Setup camera capture."""
         try:
+            print(f"Attempting to open camera {self.camera_index}...")
             self.cap = cv2.VideoCapture(self.camera_index)
             
             if not self.cap.isOpened():
+                print(f"Failed to open camera {self.camera_index}")
+                print("Available cameras:")
+                for i in range(5):  # Check first 5 camera indices
+                    test_cap = cv2.VideoCapture(i)
+                    if test_cap.isOpened():
+                        print(f"  Camera {i}: Available")
+                        test_cap.release()
+                    else:
+                        print(f"  Camera {i}: Not available")
                 raise RuntimeError(f"Could not open camera {self.camera_index}")
             
             # Set camera properties
@@ -167,8 +212,21 @@ class WebcamDemo:
                 # Get frame from queue
                 frame = self.frame_queue.get(timeout=0.1)
                 
-                # Run inference
-                result = self.inference_engine.predict_with_smoothing(frame)
+                # Process frame for inference
+                inference_frame = self._prepare_frame_for_inference(frame)
+                
+                if inference_frame is not None:
+                    # Run inference
+                    result = self.inference_engine.predict_with_smoothing(inference_frame)
+                else:
+                    # No hand detected, create empty result
+                    result = {
+                        'predicted_class_idx': 0,
+                        'predicted_class_name': 'No Hand Detected',
+                        'confidence': 0.0,
+                        'probabilities': np.zeros(len(self.class_names)),
+                        'above_threshold': False
+                    }
                 
                 # Store prediction history
                 if self.recording:
@@ -188,6 +246,41 @@ class WebcamDemo:
                 print(f"Inference error: {e}")
                 continue
     
+    def _prepare_frame_for_inference(self, frame: np.ndarray) -> Optional[np.ndarray]:
+        """Prepare frame for inference by detecting and cropping hand region.
+        
+        Args:
+            frame: Input frame from camera
+            
+        Returns:
+            Cropped hand image or None if no hand detected
+        """
+        if not self.enable_hand_detection or self.hand_detector is None:
+            # If hand detection is disabled, return the full frame
+            return frame
+        
+        try:
+            # Detect hands in the frame
+            hand_detections = self.hand_detector.detect_hands(frame)
+            
+            if not hand_detections:
+                return None
+            
+            # Get the best hand detection
+            best_hand = self.hand_detector.get_best_hand(hand_detections, self.preferred_hand)
+            
+            if best_hand is None:
+                return None
+            
+            # Crop the hand region
+            cropped_hand = self.hand_detector.crop_hand_region(frame, best_hand)
+            
+            return cropped_hand
+            
+        except Exception as e:
+            # Silently fail hand detection to avoid spam
+            return None
+    
     def draw_ui(self, frame: np.ndarray, result: Dict[str, Any]) -> np.ndarray:
         """Draw user interface on frame.
         
@@ -202,6 +295,16 @@ class WebcamDemo:
         
         # Create overlay
         overlay = frame.copy()
+        
+        # Draw hand landmarks if hand detection is enabled
+        if self.enable_hand_detection and self.hand_detector is not None:
+            try:
+                hand_detections = self.hand_detector.detect_hands(frame)
+                if hand_detections:
+                    overlay = self.hand_detector.draw_hand_landmarks(overlay, hand_detections)
+            except Exception as e:
+                # Silently fail hand visualization to avoid spam
+                pass
         
         # Main prediction
         self._draw_main_prediction(overlay, result)
@@ -379,6 +482,16 @@ class WebcamDemo:
         print("  D: Toggle debug information")
         print("  Q: Quit")
         print("\nPress any key to start...")
+        
+        # Create window before starting
+        try:
+            cv2.namedWindow('Sign Language Detection Demo', cv2.WINDOW_NORMAL)
+            cv2.resizeWindow('Sign Language Detection Demo', self.display_size[0], self.display_size[1])
+            print("Window created successfully")
+        except Exception as e:
+            print(f"Warning: Could not create window: {e}")
+            print("This might be due to display issues on macOS. The demo will still run.")
+        
         cv2.waitKey(0)
         
         self.is_running = True
@@ -405,7 +518,16 @@ class WebcamDemo:
                         display_frame = cv2.resize(display_frame, self.display_size)
                     
                     # Show frame
-                    cv2.imshow('Sign Language Detection Demo', display_frame)
+                    try:
+                        cv2.imshow('Sign Language Detection Demo', display_frame)
+                    except Exception as e:
+                        print(f"Warning: Could not display frame: {e}")
+                        # Fallback: save frame to disk for debugging
+                        if not hasattr(self, '_frame_count'):
+                            self._frame_count = 0
+                        if self._frame_count % 30 == 0:  # Save every 30th frame
+                            cv2.imwrite(f'debug_frame_{self._frame_count}.jpg', display_frame)
+                        self._frame_count += 1
                     
                     # Handle keypresses
                     key = cv2.waitKey(1) & 0xFF

@@ -9,6 +9,7 @@ A comprehensive deep learning framework for training, evaluating, and deploying 
 ## ✨ Features
 
 - **🎯 Multiple Model Architectures**: Support for EfficientNet, ResNet, MobileNet, and custom CNN architectures
+- **🤚 Hand Detection & Cropping**: MediaPipe-powered hand detection for background-robust inference
 - **📱 Cross-Platform Deployment**: Export to PyTorch Mobile, TensorFlow Lite, Core ML, and ONNX
 - **⚡ Model Optimization**: Quantization, pruning, and mobile-specific optimizations
 - **🔄 Real-time Inference**: Live webcam demo with temporal smoothing and confidence thresholding
@@ -16,6 +17,37 @@ A comprehensive deep learning framework for training, evaluating, and deploying 
 - **🌐 Web Interface**: Streamlit-based web application for easy testing
 - **📈 Experiment Tracking**: TensorBoard and Weights & Biases integration
 - **🔧 Flexible Configuration**: YAML-based configuration system
+
+## 🤚 Hand Detection & Background Robustness
+
+The framework now includes **MediaPipe-powered hand detection** to improve sign language recognition in real-world scenarios with background clutter:
+
+### Key Benefits
+- **🎯 Focused Recognition**: Automatically crops hand regions, eliminating background noise
+- **📱 Mobile-Ready**: Optimized for real-time performance on mobile devices
+- **🔄 Fallback Support**: Gracefully falls back to full-frame processing if hand detection fails
+- **⚙️ Configurable**: Adjustable confidence thresholds and hand preference settings
+
+### How It Works
+1. **Hand Detection**: MediaPipe detects hand landmarks in real-time
+2. **Smart Cropping**: Automatically crops the detected hand region with padding
+3. **Model Inference**: Feeds the cropped hand image to the sign language model
+4. **Visual Feedback**: Shows hand landmarks and bounding boxes for debugging
+
+### Usage Options
+```bash
+# Enable hand detection (default)
+python demo.py webcam --model checkpoints/best_model.pth
+
+# Disable hand detection for full-frame processing
+python demo.py webcam --model checkpoints/best_model.pth --no-hand-detection
+
+# Customize hand detection sensitivity
+python demo.py webcam --model checkpoints/best_model.pth --hand-confidence 0.7
+
+# Prefer left hand detection
+python demo.py webcam --model checkpoints/best_model.pth --preferred-hand left
+```
 
 ## 🚀 Quick Start
 
@@ -185,11 +217,17 @@ python evaluate.py --model-path checkpoints/best_model.pth --dataset asl_alphabe
 
 **Webcam demo:**
 ```bash
-# Standard webcam demo
+# Standard webcam demo with hand detection (recommended)
 python demo.py webcam --model checkpoints/best_model.pth
 
 # For Apple Silicon Macs (M1/M2)
 python demo.py webcam --model checkpoints/best_model.pth --device cpu
+
+# Disable hand detection (use full frame)
+python demo.py webcam --model checkpoints/best_model.pth --no-hand-detection
+
+# Customize hand detection settings
+python demo.py webcam --model checkpoints/best_model.pth --hand-confidence 0.7 --preferred-hand left
 ```
 
 **Web application:**
@@ -436,6 +474,22 @@ python evaluate.py --model-path checkpoints/best_model.pth --dataset asl_alphabe
 
 # For webcam demo
 python demo.py webcam --model checkpoints/best_model.pth --device cpu
+```
+
+#### Hand Detection Issues
+**Problem**: Hand detection not working or causing errors
+**Solutions**:
+1. **Disable hand detection**: Use `--no-hand-detection` flag
+2. **Adjust confidence**: Lower `--hand-confidence` (e.g., 0.3)
+3. **Check MediaPipe installation**: Ensure MediaPipe is properly installed
+4. **Use full frame**: If hand detection fails, the system automatically falls back to full-frame processing
+
+```bash
+# Disable hand detection
+python demo.py webcam --model checkpoints/best_model.pth --no-hand-detection
+
+# Lower hand detection confidence
+python demo.py webcam --model checkpoints/best_model.pth --hand-confidence 0.3
 ```
 
 #### PyTorch 2.6 Compatibility Issues
