@@ -98,6 +98,13 @@ class SignLanguageModel {
             
             print("🔍 Model prediction output keys: \(prediction.featureNames)")
             
+            // Debug: Print all feature values
+            for key in prediction.featureNames {
+                if let value = prediction.featureValue(for: key) {
+                    print("🔍 Key '\(key)': \(value)")
+                }
+            }
+            
             // Get the prediction results - try different possible output names
             var output: String?
             var confidence: MLMultiArray?
@@ -109,7 +116,7 @@ class SignLanguageModel {
             for outputName in possibleOutputNames {
                 if let value = prediction.featureValue(for: outputName)?.stringValue {
                     output = value
-                    print("✅ Found output in key: \(outputName) = \(value)")
+                    print("✅ Found output in key: \(outputName) = '\(value)'")
                     break
                 }
             }
@@ -122,16 +129,24 @@ class SignLanguageModel {
                 }
             }
             
-            if let output = output, let confidence = confidence {
-                let maxConfidence = getMaxConfidence(from: confidence)
+            if let output = output, !output.isEmpty {
+                let maxConfidence = confidence != nil ? getMaxConfidence(from: confidence!) : 0.5
                 print("🎯 Model prediction: \(output) (confidence: \(maxConfidence))")
                 completion(output, maxConfidence)
             } else {
                 print("❌ Failed to extract prediction results")
                 print("❌ Available keys: \(prediction.featureNames)")
                 print("❌ Output found: \(output != nil)")
+                print("❌ Output empty: \(output?.isEmpty ?? true)")
                 print("❌ Confidence found: \(confidence != nil)")
-                completion("Prediction failed", 0.0)
+                
+                // Try to get any available output as fallback
+                if let fallbackOutput = prediction.featureValue(for: "classLabel")?.stringValue {
+                    print("🔄 Fallback output: '\(fallbackOutput)'")
+                    completion(fallbackOutput.isEmpty ? "Unknown" : fallbackOutput, 0.3)
+                } else {
+                    completion("Prediction failed", 0.0)
+                }
             }
             
         } catch {
