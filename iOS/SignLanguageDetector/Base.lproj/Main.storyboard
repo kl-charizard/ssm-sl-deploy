@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SignLanguageDetector" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign Language Detector" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="abc-12-def">
+                                <rect key="frame" x="20" y="200" width="353" height="34"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Real-time American Sign Language recognition using your device's camera" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ghi-34-jkl">
+                                <rect key="frame" x="20" y="254" width="353" height="40"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" systemColor="secondaryLabelColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mno-56-pqr">
+                                <rect key="frame" x="50" y="400" width="293" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="stu-78-vwx"/>
+                                </constraints>
+                                <state key="normal" title="Start Detection"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Start Detection">
+                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="18"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="startButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yza-90-bcd"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="abc-12-def" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="efg-12-hij"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="abc-12-def" secondAttribute="trailing" constant="20" id="klm-34-nop"/>
+                            <constraint firstItem="abc-12-def" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="qrs-56-tuv"/>
+                            <constraint firstItem="ghi-34-jkl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="wxy-78-zab"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ghi-34-jkl" secondAttribute="trailing" constant="20" id="cde-90-fgh"/>
+                            <constraint firstItem="ghi-34-jkl" firstAttribute="top" secondItem="abc-12-def" secondAttribute="bottom" constant="20" id="ijk-12-lmn"/>
+                            <constraint firstItem="mno-56-pqr" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="opq-34-rst"/>
+                            <constraint firstItem="mno-56-pqr" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="50" id="uvw-56-xyz"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="mno-56-pqr" secondAttribute="trailing" constant="50" id="abc-78-def"/>
+                            <constraint firstItem="mno-56-pqr" firstAttribute="top" secondItem="ghi-34-jkl" secondAttribute="bottom" constant="106" id="ghi-90-jkl"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="descriptionLabel" destination="ghi-34-jkl" id="mno-12-pqr"/>
+                        <outlet property="startButton" destination="mno-56-pqr" id="stu-34-vwx"/>
+                        <outlet property="titleLabel" destination="abc-12-def" id="yza-56-bcd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="20" y="3"/>
+        </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="camera-vc" customClass="CameraViewController" customModule="SignLanguageDetector" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="camera-view">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="preview-view">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Point your hand at the camera" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="prediction-label">
+                                <rect key="frame" x="20" y="100" width="353" height="29"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Confidence: --" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="confidence-label">
+                                <rect key="frame" x="20" y="149" width="353" height="19"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hand Detection: --" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hand-detection-label">
+                                <rect key="frame" x="20" y="188" width="353" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="1" green="1" blue="0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="close-button">
+                                <rect key="frame" x="343" y="50" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="close-width"/>
+                                    <constraint firstAttribute="height" constant="40" id="close-height"/>
+                                </constraints>
+                                <state key="normal" title="✕"/>
+                                <buttonConfiguration key="configuration" style="plain" title="✕">
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="24"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="closeButtonTapped:" destination="camera-vc" eventType="touchUpInside" id="close-action"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="camera-safe-area"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="preview-view" firstAttribute="leading" secondItem="camera-view" secondAttribute="leading" id="preview-leading"/>
+                            <constraint firstItem="preview-view" firstAttribute="top" secondItem="camera-view" secondAttribute="top" id="preview-top"/>
+                            <constraint firstItem="camera-view" firstAttribute="trailing" secondItem="preview-view" secondAttribute="trailing" id="preview-trailing"/>
+                            <constraint firstItem="camera-view" firstAttribute="bottom" secondItem="preview-view" secondAttribute="bottom" id="preview-bottom"/>
+                            <constraint firstItem="prediction-label" firstAttribute="leading" secondItem="camera-safe-area" secondAttribute="leading" constant="20" id="prediction-leading"/>
+                            <constraint firstItem="camera-safe-area" firstAttribute="trailing" secondItem="prediction-label" secondAttribute="trailing" constant="20" id="prediction-trailing"/>
+                            <constraint firstItem="prediction-label" firstAttribute="top" secondItem="camera-safe-area" secondAttribute="top" constant="60" id="prediction-top"/>
+                            <constraint firstItem="confidence-label" firstAttribute="leading" secondItem="camera-safe-area" secondAttribute="leading" constant="20" id="confidence-leading"/>
+                            <constraint firstItem="camera-safe-area" firstAttribute="trailing" secondItem="confidence-label" secondAttribute="trailing" constant="20" id="confidence-trailing"/>
+                            <constraint firstItem="confidence-label" firstAttribute="top" secondItem="prediction-label" secondAttribute="bottom" constant="20" id="confidence-top"/>
+                            <constraint firstItem="hand-detection-label" firstAttribute="leading" secondItem="camera-safe-area" secondAttribute="leading" constant="20" id="hand-leading"/>
+                            <constraint firstItem="camera-safe-area" firstAttribute="trailing" secondItem="hand-detection-label" secondAttribute="trailing" constant="20" id="hand-trailing"/>
+                            <constraint firstItem="hand-detection-label" firstAttribute="top" secondItem="confidence-label" secondAttribute="bottom" constant="20" id="hand-top"/>
+                            <constraint firstItem="close-button" firstAttribute="top" secondItem="camera-safe-area" secondAttribute="top" constant="10" id="close-top"/>
+                            <constraint firstItem="camera-safe-area" firstAttribute="trailing" secondItem="close-button" secondAttribute="trailing" constant="10" id="close-trailing"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="closeButton" destination="close-button" id="close-outlet"/>
+                        <outlet property="confidenceLabel" destination="confidence-label" id="confidence-outlet"/>
+                        <outlet property="handDetectionLabel" destination="hand-detection-label" id="hand-outlet"/>
+                        <outlet property="predictionLabel" destination="prediction-label" id="prediction-outlet"/>
+                        <outlet property="previewView" destination="preview-view" id="preview-outlet"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="camera-first-responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1000" y="3"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

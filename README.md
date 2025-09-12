@@ -298,7 +298,33 @@ python demo.py image --model checkpoints/best_model.pth --image test.jpg --outpu
 
 ## 📱 Mobile Deployment
 
-### Android
+### iOS App (Ready to Use!)
+We've created a complete iOS app with real-time sign language detection:
+
+```bash
+# 1. Convert your trained model to Core ML
+python scripts/convert_to_coreml.py \
+    --model-path checkpoints/best_model.pth \
+    --output-path ios/SignLanguageDetector/SignLanguageModel.mlmodel \
+    --optimize
+
+# 2. Open the iOS project
+cd ios/
+open SignLanguageDetector.xcodeproj
+
+# 3. Build and run on device
+make run-device
+```
+
+**Features:**
+- 🤚 Real-time hand detection using Vision framework
+- 🎯 Core ML-powered ASL recognition
+- 📱 Native iOS experience with camera integration
+- ⚡ Optimized for mobile performance
+
+**See `ios/README.md` for detailed setup instructions.**
+
+### Android (Coming Soon)
 ```bash
 # Train and export for Android
 python train.py --model mobilenet_v3_small --quantize --export-formats torchscript tflite
@@ -307,18 +333,6 @@ python train.py --model mobilenet_v3_small --quantize --export-formats torchscri
 python -c "
 from src.deployment.mobile_deployment import optimize_for_mobile
 optimize_for_mobile(model, class_names, 'android_deployment', ['android'])
-"
-```
-
-### iOS
-```bash
-# Export for iOS
-python train.py --model efficientnet_b0 --export-formats torchscript coreml
-
-# Create iOS deployment package  
-python -c "
-from src.deployment.mobile_deployment import optimize_for_mobile
-optimize_for_mobile(model, class_names, 'ios_deployment', ['ios'])
 "
 ```
 
