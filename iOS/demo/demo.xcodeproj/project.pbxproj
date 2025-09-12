@@ -14,6 +14,7 @@
 		CFB90DFE2E746AC700802E0A /* HandDetectionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandDetectionHelper.swift; sourceTree = "<group>"; };
 		CFB90E002E746AC700802E0A /* SignLanguageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignLanguageModel.swift; sourceTree = "<group>"; };
 		CFB90E012E746AC700802E0A /* ModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTest.swift; sourceTree = "<group>"; };
+		CFB90E032E746AC700802E0A /* HandDetectionOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandDetectionOverlay.swift; sourceTree = "<group>"; };
 		CFB90E022E746AC700802E0A /* SignLanguageModel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SignLanguageModel.mlmodel; sourceTree = "<group>"; };
 		CFB90E042E746AC700802E0A /* SignLanguageModel_optimized.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SignLanguageModel_optimized.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -38,6 +39,7 @@
 				CFB90DFE2E746AC700802E0A /* HandDetectionHelper.swift */,
 				CFB90E002E746AC700802E0A /* SignLanguageModel.swift */,
 				CFB90E012E746AC700802E0A /* ModelTest.swift */,
+				CFB90E032E746AC700802E0A /* HandDetectionOverlay.swift */,
 				CFB90E022E746AC700802E0A /* SignLanguageModel.mlmodel */,
 				CFB90E042E746AC700802E0A /* SignLanguageModel_optimized.mlmodel */,
 				CFB90DF72E746AC700802E0A /* Products */,
@@ -131,6 +133,7 @@
 				CFB90E0C2E746AC800802E0A /* HandDetectionHelper.swift in Sources */,
 				CFB90E0E2E746AC800802E0A /* SignLanguageModel.swift in Sources */,
 				CFB90E0F2E746AC800802E0A /* ModelTest.swift in Sources */,
+				CFB90E112E746AC800802E0A /* HandDetectionOverlay.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,6 +354,7 @@
 		CFB90E0C2E746AC800802E0A /* HandDetectionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB90DFE2E746AC700802E0A /* HandDetectionHelper.swift */; };
 		CFB90E0E2E746AC800802E0A /* SignLanguageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB90E002E746AC700802E0A /* SignLanguageModel.swift */; };
 		CFB90E0F2E746AC800802E0A /* ModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB90E012E746AC700802E0A /* ModelTest.swift */; };
+		CFB90E112E746AC800802E0A /* HandDetectionOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB90E032E746AC700802E0A /* HandDetectionOverlay.swift */; };
 		CFB90E102E746AC800802E0A /* SignLanguageModel.mlmodel in Resources */ = {isa = PBXBuildFile; fileRef = CFB90E022E746AC700802E0A /* SignLanguageModel.mlmodel */; };
 		CFB90E122E746AC800802E0A /* SignLanguageModel_optimized.mlmodel in Resources */ = {isa = PBXBuildFile; fileRef = CFB90E042E746AC700802E0A /* SignLanguageModel_optimized.mlmodel */; };
 /* End XCSwiftPackageProductDependency section */

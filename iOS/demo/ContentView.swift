@@ -126,6 +126,14 @@ struct CameraView: View {
                 CameraPreviewView(cameraManager: cameraManager)
                     .ignoresSafeArea()
                 
+                // Hand Detection Overlay
+                if let handDetectionHelper = cameraManager.handDetectionHelper {
+                    HandDetectionOverlay(
+                        handObservations: handDetectionHelper.currentHandObservations,
+                        imageSize: handDetectionHelper.currentImageSize
+                    )
+                }
+                
                 // Overlay UI
                 VStack {
                     // Top Bar

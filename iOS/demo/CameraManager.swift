@@ -21,7 +21,7 @@ class CameraManager: NSObject, ObservableObject {
     
     var captureSession: AVCaptureSession?
     private var videoOutput: AVCaptureVideoDataOutput?
-    private var handDetectionHelper: HandDetectionHelper?
+    var handDetectionHelper: HandDetectionHelper?
     private var signLanguageModel: SignLanguageModel?
     
     enum CameraError: Error {

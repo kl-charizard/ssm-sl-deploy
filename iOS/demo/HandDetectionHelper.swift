@@ -9,9 +9,12 @@ import Foundation
 import Vision
 import CoreML
 import UIKit
+import Combine
 
-class HandDetectionHelper {
+class HandDetectionHelper: ObservableObject {
     private let handPoseRequest = VNDetectHumanHandPoseRequest()
+    @Published var currentHandObservations: [VNHumanHandPoseObservation] = []
+    @Published var currentImageSize: CGSize = .zero
     
     init() {
         handPoseRequest.maximumHandCount = 1
@@ -19,11 +22,20 @@ class HandDetectionHelper {
     
     func detectHands(in pixelBuffer: CVPixelBuffer, completion: @escaping (UIImage?) -> Void) {
         let requestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: .up, options: [:])
+        let imageSize = CGSize(width: CVPixelBufferGetWidth(pixelBuffer), height: CVPixelBufferGetHeight(pixelBuffer))
         
         do {
             try requestHandler.perform([handPoseRequest])
             
-            guard let observation = handPoseRequest.results?.first else {
+            let observations = handPoseRequest.results ?? []
+            
+            // Update published properties for UI
+            DispatchQueue.main.async {
+                self.currentHandObservations = observations
+                self.currentImageSize = imageSize
+            }
+            
+            guard let observation = observations.first else {
                 print("❌ No hand pose detected in frame")
                 completion(nil)
                 return
@@ -62,6 +74,9 @@ class HandDetectionHelper {
             
         } catch {
             print("❌ Hand detection error: \(error)")
+            DispatchQueue.main.async {
+                self.currentHandObservations = []
+            }
             completion(nil)
         }
     }
