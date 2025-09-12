@@ -54,13 +54,16 @@ class HandDetectionHelper {
     
     private func getHandBoundingBox(from observation: VNHumanHandPoseObservation, in pixelBuffer: CVPixelBuffer) -> CGRect {
         let imageSize = CGSize(width: CVPixelBufferGetWidth(pixelBuffer), height: CVPixelBufferGetHeight(pixelBuffer))
+        print("📐 Image size: \(imageSize)")
         
         // Get all available keypoints
         var allPoints: [CGPoint] = []
         
         // Try to get keypoints for different hand parts
         if let wrist = try? observation.recognizedPoint(.wrist) {
-            allPoints.append(CGPoint(x: wrist.location.x * imageSize.width, y: wrist.location.y * imageSize.height))
+            let point = CGPoint(x: wrist.location.x * imageSize.width, y: wrist.location.y * imageSize.height)
+            allPoints.append(point)
+            print("✋ Wrist point: \(point)")
         }
         
         // Add finger keypoints
@@ -74,11 +77,15 @@ class HandDetectionHelper {
         
         for joint in fingerJoints {
             if let point = try? observation.recognizedPoint(joint) {
-                allPoints.append(CGPoint(x: point.location.x * imageSize.width, y: point.location.y * imageSize.height))
+                let cgPoint = CGPoint(x: point.location.x * imageSize.width, y: point.location.y * imageSize.height)
+                allPoints.append(cgPoint)
             }
         }
         
+        print("📊 Total keypoints found: \(allPoints.count)")
+        
         guard !allPoints.isEmpty else {
+            print("⚠️ No keypoints found, using fallback center region")
             // Fallback to center region if no keypoints found
             return CGRect(x: imageSize.width * 0.25, y: imageSize.height * 0.25, width: imageSize.width * 0.5, height: imageSize.height * 0.5)
         }
@@ -92,32 +99,56 @@ class HandDetectionHelper {
         let width = maxX - minX
         let height = maxY - minY
         
-        return CGRect(x: minX, y: minY, width: width, height: height)
+        let boundingBox = CGRect(x: minX, y: minY, width: width, height: height)
+        print("📦 Calculated bounding box: \(boundingBox)")
+        
+        return boundingBox
     }
     
     private func cropHandRegion(from image: UIImage, boundingBox: CGRect) -> UIImage? {
-        guard let cgImage = image.cgImage else { return nil }
+        guard let cgImage = image.cgImage else { 
+            print("❌ Failed to get CGImage from UIImage")
+            return nil 
+        }
         
-        // Convert Vision coordinates to Core Graphics coordinates
-        let width = CGFloat(cgImage.width)
-        let height = CGFloat(cgImage.height)
+        print("🖼️ Original image size: \(cgImage.width)x\(cgImage.height)")
+        print("📦 Bounding box to crop: \(boundingBox)")
         
-        let x = boundingBox.origin.x * width
-        let y = (1 - boundingBox.origin.y - boundingBox.height) * height
-        let cropWidth = boundingBox.width * width
-        let cropHeight = boundingBox.height * height
+        // The bounding box is already in pixel coordinates, so we can use it directly
+        let imageWidth = CGFloat(cgImage.width)
+        let imageHeight = CGFloat(cgImage.height)
         
-        // Add padding around the hand
-        let padding: CGFloat = 0.2
-        let paddedX = max(0, x - cropWidth * padding)
-        let paddedY = max(0, y - cropHeight * padding)
-        let paddedWidth = min(width - paddedX, cropWidth * (1 + 2 * padding))
-        let paddedHeight = min(height - paddedY, cropHeight * (1 + 2 * padding))
+        // Ensure bounding box is within image bounds
+        let clampedX = max(0, min(boundingBox.origin.x, imageWidth - boundingBox.width))
+        let clampedY = max(0, min(boundingBox.origin.y, imageHeight - boundingBox.height))
+        let clampedWidth = min(boundingBox.width, imageWidth - clampedX)
+        let clampedHeight = min(boundingBox.height, imageHeight - clampedY)
         
-        let cropRect = CGRect(x: paddedX, y: paddedY, width: paddedWidth, height: paddedHeight)
+        let clampedRect = CGRect(x: clampedX, y: clampedY, width: clampedWidth, height: clampedHeight)
+        print("🔧 Clamped rect: \(clampedRect)")
         
-        guard let croppedCGImage = cgImage.cropping(to: cropRect) else { return nil }
+        // Ensure the rect has valid dimensions
+        guard clampedRect.width > 0 && clampedRect.height > 0 else {
+            print("❌ Invalid rect dimensions: width=\(clampedRect.width), height=\(clampedRect.height)")
+            return nil
+        }
         
-        return UIImage(cgImage: croppedCGImage)
+        // Add some padding around the hand
+        let padding: CGFloat = 20
+        let paddedX = max(0, clampedX - padding)
+        let paddedY = max(0, clampedY - padding)
+        let paddedWidth = min(imageWidth - paddedX, clampedWidth + 2 * padding)
+        let paddedHeight = min(imageHeight - paddedY, clampedHeight + 2 * padding)
+        
+        let paddedRect = CGRect(x: paddedX, y: paddedY, width: paddedWidth, height: paddedHeight)
+        print("🔧 Padded rect: \(paddedRect)")
+        
+        guard let croppedCgImage = cgImage.cropping(to: paddedRect) else { 
+            print("❌ Failed to crop CGImage")
+            return nil 
+        }
+        
+        print("✅ Successfully cropped image to: \(croppedCgImage.width)x\(croppedCgImage.height)")
+        return UIImage(cgImage: croppedCgImage)
     }
 }
