@@ -96,15 +96,41 @@ class SignLanguageModel {
             let input = try MLDictionaryFeatureProvider(dictionary: ["image": MLFeatureValue(pixelBuffer: pixelBuffer)])
             let prediction = try model.prediction(from: input)
             
-            // Get the prediction results
-            if let output = prediction.featureValue(for: "classLabel")?.stringValue,
-               let confidence = prediction.featureValue(for: "classLabelProbs")?.multiArrayValue {
-                
+            print("🔍 Model prediction output keys: \(prediction.featureNames)")
+            
+            // Get the prediction results - try different possible output names
+            var output: String?
+            var confidence: MLMultiArray?
+            
+            // Try different possible output names
+            let possibleOutputNames = ["classLabel", "label", "output", "prediction"]
+            let possibleConfidenceNames = ["classLabelProbs", "probabilities", "confidence", "probs"]
+            
+            for outputName in possibleOutputNames {
+                if let value = prediction.featureValue(for: outputName)?.stringValue {
+                    output = value
+                    print("✅ Found output in key: \(outputName) = \(value)")
+                    break
+                }
+            }
+            
+            for confName in possibleConfidenceNames {
+                if let value = prediction.featureValue(for: confName)?.multiArrayValue {
+                    confidence = value
+                    print("✅ Found confidence in key: \(confName)")
+                    break
+                }
+            }
+            
+            if let output = output, let confidence = confidence {
                 let maxConfidence = getMaxConfidence(from: confidence)
                 print("🎯 Model prediction: \(output) (confidence: \(maxConfidence))")
                 completion(output, maxConfidence)
             } else {
                 print("❌ Failed to extract prediction results")
+                print("❌ Available keys: \(prediction.featureNames)")
+                print("❌ Output found: \(output != nil)")
+                print("❌ Confidence found: \(confidence != nil)")
                 completion("Prediction failed", 0.0)
             }
             
