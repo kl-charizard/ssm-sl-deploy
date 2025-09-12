@@ -114,7 +114,15 @@ class SignLanguageModel {
             let possibleConfidenceNames = ["classLabelProbs", "probabilities", "confidence", "probs"]
             
             for outputName in possibleOutputNames {
-                if let value = prediction.featureValue(for: outputName)?.stringValue {
+                if let multiArray = prediction.featureValue(for: outputName)?.multiArrayValue {
+                    // Handle MultiArray output (raw logits)
+                    print("✅ Found MultiArray output in key: \(outputName)")
+                    let (predictedClass, confidenceValue) = getPredictionFromMultiArray(multiArray)
+                    output = predictedClass
+                    confidence = multiArray
+                    print("✅ Extracted prediction: \(predictedClass) with confidence: \(confidenceValue)")
+                    break
+                } else if let value = prediction.featureValue(for: outputName)?.stringValue {
                     output = value
                     print("✅ Found output in key: \(outputName) = '\(value)'")
                     break
@@ -189,6 +197,62 @@ class SignLanguageModel {
         CVPixelBufferUnlockBaseAddress(buffer, CVPixelBufferLockFlags(rawValue: 0))
         
         return buffer
+    }
+    
+    private func getPredictionFromMultiArray(_ multiArray: MLMultiArray) -> (String, Double) {
+        var maxIndex = 0
+        var maxValue = multiArray[0].doubleValue
+        
+        // Find the index with the highest value
+        for i in 1..<multiArray.count {
+            let value = multiArray[i].doubleValue
+            if value > maxValue {
+                maxValue = value
+                maxIndex = i
+            }
+        }
+        
+        // Convert index to ASL letter
+        let predictedLetter = aslAlphabet[maxIndex]
+        
+        // Convert logits to probability using softmax
+        let probabilities = softmax(multiArray)
+        let confidence = probabilities[maxIndex]
+        
+        // Debug: Print top 5 predictions
+        var topPredictions: [(String, Double)] = []
+        for i in 0..<min(5, multiArray.count) {
+            let letter = aslAlphabet[i]
+            let prob = probabilities[i]
+            topPredictions.append((letter, prob))
+        }
+        topPredictions.sort { $0.1 > $1.1 }
+        
+        print("🔍 Top 5 predictions: \(topPredictions.map { "\($0.0): \(String(format: "%.3f", $0.1))" }.joined(separator: ", "))")
+        print("🔍 Selected: \(predictedLetter) (index: \(maxIndex), confidence: \(String(format: "%.3f", confidence)))")
+        
+        return (predictedLetter, confidence)
+    }
+    
+    private func softmax(_ multiArray: MLMultiArray) -> [Double] {
+        // Find max value for numerical stability
+        var maxValue = multiArray[0].doubleValue
+        for i in 1..<multiArray.count {
+            maxValue = max(maxValue, multiArray[i].doubleValue)
+        }
+        
+        // Calculate exponentials
+        var expValues: [Double] = []
+        var sumExp = 0.0
+        
+        for i in 0..<multiArray.count {
+            let expValue = exp(multiArray[i].doubleValue - maxValue)
+            expValues.append(expValue)
+            sumExp += expValue
+        }
+        
+        // Normalize to get probabilities
+        return expValues.map { $0 / sumExp }
     }
     
     private func getMaxConfidence(from multiArray: MLMultiArray) -> Double {

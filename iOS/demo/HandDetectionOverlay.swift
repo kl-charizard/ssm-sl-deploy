@@ -58,6 +58,8 @@ struct HandBoundingBoxView: View {
             .position(x: scaledBox.midX, y: scaledBox.midY)
             .onAppear {
                 print("🎨 Drawing bounding box: \(scaledBox)")
+                print("🎨 Screen size: \(screenSize), Image size: \(imageSize)")
+                print("🎨 Scale: \(scaleX), \(scaleY)")
             }
     }
     
