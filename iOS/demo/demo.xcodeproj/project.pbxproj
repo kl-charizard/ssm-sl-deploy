@@ -6,63 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXContainerItemProxy section */
-		CFCB98E62E745F78006A3399 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CFCB98CE2E745F77006A3399 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CFCB98D52E745F77006A3399;
-			remoteInfo = demo;
-		};
-		CFCB98F02E745F78006A3399 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CFCB98CE2E745F77006A3399 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CFCB98D52E745F77006A3399;
-			remoteInfo = demo;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		CFCB98D62E745F77006A3399 /* demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		CFCB98E52E745F78006A3399 /* demoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = demoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CFCB98EF2E745F78006A3399 /* demoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = demoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CFB90DF62E746AC700802E0A /* demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CFB90DF82E746AC700802E0A /* demoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = demoApp.swift; sourceTree = "<group>"; };
+		CFB90DFA2E746AC700802E0A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		CFB90DFC2E746AC700802E0A /* CameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraManager.swift; sourceTree = "<group>"; };
+		CFB90DFE2E746AC700802E0A /* HandDetectionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandDetectionHelper.swift; sourceTree = "<group>"; };
+		CFB90E002E746AC700802E0A /* SignLanguageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignLanguageModel.swift; sourceTree = "<group>"; };
+		CFB90E022E746AC700802E0A /* SignLanguageModel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SignLanguageModel.mlmodel; sourceTree = "<group>"; };
+		CFB90E042E746AC700802E0A /* SignLanguageModel_optimized.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SignLanguageModel_optimized.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		CFCB98D82E745F77006A3399 /* demo */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = demo;
-			sourceTree = "<group>";
-		};
-		CFCB98E82E745F78006A3399 /* demoTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = demoTests;
-			sourceTree = "<group>";
-		};
-		CFCB98F22E745F78006A3399 /* demoUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = demoUITests;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
-
 /* Begin PBXFrameworksBuildPhase section */
-		CFCB98D32E745F77006A3399 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CFCB98E22E745F78006A3399 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CFCB98EC2E745F78006A3399 /* Frameworks */ = {
+		CFB90DF32E746AC700802E0A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -72,22 +28,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CFCB98CD2E745F77006A3399 = {
+		CFB90DED2E746AC700802E0A = {
 			isa = PBXGroup;
 			children = (
-				CFCB98D82E745F77006A3399 /* demo */,
-				CFCB98E82E745F78006A3399 /* demoTests */,
-				CFCB98F22E745F78006A3399 /* demoUITests */,
-				CFCB98D72E745F77006A3399 /* Products */,
+				CFB90DF82E746AC700802E0A /* demoApp.swift */,
+				CFB90DFA2E746AC700802E0A /* ContentView.swift */,
+				CFB90DFC2E746AC700802E0A /* CameraManager.swift */,
+				CFB90DFE2E746AC700802E0A /* HandDetectionHelper.swift */,
+				CFB90E002E746AC700802E0A /* SignLanguageModel.swift */,
+				CFB90E022E746AC700802E0A /* SignLanguageModel.mlmodel */,
+				CFB90E042E746AC700802E0A /* SignLanguageModel_optimized.mlmodel */,
+				CFB90DF72E746AC700802E0A /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		CFCB98D72E745F77006A3399 /* Products */ = {
+		CFB90DF72E746AC700802E0A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CFCB98D62E745F77006A3399 /* demo.app */,
-				CFCB98E52E745F78006A3399 /* demoTests.xctest */,
-				CFCB98EF2E745F78006A3399 /* demoUITests.xctest */,
+				CFB90DF62E746AC700802E0A /* demo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,134 +53,61 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CFCB98D52E745F77006A3399 /* demo */ = {
+		CFB90DF52E746AC700802E0A /* demo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CFCB98F92E745F78006A3399 /* Build configuration list for PBXNativeTarget "demo" */;
+			buildConfigurationList = CFB90E192E746AC800802E0A /* Build configuration list for PBXNativeTarget "demo" */;
 			buildPhases = (
-				CFCB98D22E745F77006A3399 /* Sources */,
-				CFCB98D32E745F77006A3399 /* Frameworks */,
-				CFCB98D42E745F77006A3399 /* Resources */,
+				CFB90DF22E746AC700802E0A /* Sources */,
+				CFB90DF32E746AC700802E0A /* Frameworks */,
+				CFB90DF42E746AC700802E0A /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				CFCB98D82E745F77006A3399 /* demo */,
 			);
 			name = demo;
 			packageProductDependencies = (
 			);
 			productName = demo;
-			productReference = CFCB98D62E745F77006A3399 /* demo.app */;
+			productReference = CFB90DF62E746AC700802E0A /* demo.app */;
 			productType = "com.apple.product-type.application";
-		};
-		CFCB98E42E745F78006A3399 /* demoTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CFCB98FC2E745F78006A3399 /* Build configuration list for PBXNativeTarget "demoTests" */;
-			buildPhases = (
-				CFCB98E12E745F78006A3399 /* Sources */,
-				CFCB98E22E745F78006A3399 /* Frameworks */,
-				CFCB98E32E745F78006A3399 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CFCB98E72E745F78006A3399 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				CFCB98E82E745F78006A3399 /* demoTests */,
-			);
-			name = demoTests;
-			packageProductDependencies = (
-			);
-			productName = demoTests;
-			productReference = CFCB98E52E745F78006A3399 /* demoTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		CFCB98EE2E745F78006A3399 /* demoUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CFCB98FF2E745F78006A3399 /* Build configuration list for PBXNativeTarget "demoUITests" */;
-			buildPhases = (
-				CFCB98EB2E745F78006A3399 /* Sources */,
-				CFCB98EC2E745F78006A3399 /* Frameworks */,
-				CFCB98ED2E745F78006A3399 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CFCB98F12E745F78006A3399 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				CFCB98F22E745F78006A3399 /* demoUITests */,
-			);
-			name = demoUITests;
-			packageProductDependencies = (
-			);
-			productName = demoUITests;
-			productReference = CFCB98EF2E745F78006A3399 /* demoUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		CFCB98CE2E745F77006A3399 /* Project object */ = {
+		CFB90DEE2E746AC700802E0A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2600;
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
-					CFCB98D52E745F77006A3399 = {
+					CFB90DF52E746AC700802E0A = {
 						CreatedOnToolsVersion = 26.0;
-					};
-					CFCB98E42E745F78006A3399 = {
-						CreatedOnToolsVersion = 26.0;
-						TestTargetID = CFCB98D52E745F77006A3399;
-					};
-					CFCB98EE2E745F78006A3399 = {
-						CreatedOnToolsVersion = 26.0;
-						TestTargetID = CFCB98D52E745F77006A3399;
 					};
 				};
 			};
-			buildConfigurationList = CFCB98D12E745F77006A3399 /* Build configuration list for PBXProject "demo" */;
+			buildConfigurationList = CFB90DF12E746AC700802E0A /* Build configuration list for PBXProject "demo" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = CFCB98CD2E745F77006A3399;
+			mainGroup = CFB90DED2E746AC700802E0A;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = CFCB98D72E745F77006A3399 /* Products */;
+			productRefGroup = CFB90DF72E746AC700802E0A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CFCB98D52E745F77006A3399 /* demo */,
-				CFCB98E42E745F78006A3399 /* demoTests */,
-				CFCB98EE2E745F78006A3399 /* demoUITests */,
+				CFB90DF52E746AC700802E0A /* demo */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		CFCB98D42E745F77006A3399 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CFCB98E32E745F78006A3399 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CFCB98ED2E745F78006A3399 /* Resources */ = {
+		CFB90DF42E746AC700802E0A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -232,44 +117,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		CFCB98D22E745F77006A3399 /* Sources */ = {
+		CFB90DF22E746AC700802E0A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CFCB98E12E745F78006A3399 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CFCB98EB2E745F78006A3399 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				CFB90E062E746AC800802E0A /* demoApp.swift in Sources */,
+				CFB90E082E746AC800802E0A /* ContentView.swift in Sources */,
+				CFB90E0A2E746AC800802E0A /* CameraManager.swift in Sources */,
+				CFB90E0C2E746AC800802E0A /* HandDetectionHelper.swift in Sources */,
+				CFB90E0E2E746AC800802E0A /* SignLanguageModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		CFCB98E72E745F78006A3399 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CFCB98D52E745F77006A3399 /* demo */;
-			targetProxy = CFCB98E62E745F78006A3399 /* PBXContainerItemProxy */;
-		};
-		CFCB98F12E745F78006A3399 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CFCB98D52E745F77006A3399 /* demo */;
-			targetProxy = CFCB98F02E745F78006A3399 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
-		CFCB98F72E745F78006A3399 /* Debug */ = {
+		CFB90E172E746AC800802E0A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -309,7 +172,6 @@
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -322,7 +184,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -333,7 +195,7 @@
 			};
 			name = Debug;
 		};
-		CFCB98F82E745F78006A3399 /* Release */ = {
+		CFB90E182E746AC800802E0A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -380,7 +242,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -390,7 +252,7 @@
 			};
 			name = Release;
 		};
-		CFCB98FA2E745F78006A3399 /* Debug */ = {
+		CFB90E1A2E746AC800802E0A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -400,6 +262,7 @@
 				DEVELOPMENT_TEAM = 9AWTBA8JR9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app needs camera access to detect sign language gestures.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -421,7 +284,7 @@
 			};
 			name = Debug;
 		};
-		CFCB98FB2E745F78006A3399 /* Release */ = {
+		CFB90E1B2E746AC800802E0A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -431,6 +294,7 @@
 				DEVELOPMENT_TEAM = 9AWTBA8JR9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app needs camera access to detect sign language gestures.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -449,129 +313,39 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		CFCB98FD2E745F78006A3399 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9AWTBA8JR9;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "kl-charizard.demoTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/demo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/demo";
-			};
-			name = Debug;
-		};
-		CFCB98FE2E745F78006A3399 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9AWTBA8JR9;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "kl-charizard.demoTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/demo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/demo";
-			};
-			name = Release;
-		};
-		CFCB99002E745F78006A3399 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9AWTBA8JR9;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "kl-charizard.demoUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = demo;
-			};
-			name = Debug;
-		};
-		CFCB99012E745F78006A3399 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9AWTBA8JR9;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "kl-charizard.demoUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = demo;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CFCB98D12E745F77006A3399 /* Build configuration list for PBXProject "demo" */ = {
+		CFB90DF12E746AC700802E0A /* Build configuration list for PBXProject "demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				CFCB98F72E745F78006A3399 /* Debug */,
-				CFCB98F82E745F78006A3399 /* Release */,
+				CFB90E172E746AC800802E0A /* Debug */,
+				CFB90E182E746AC800802E0A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CFCB98F92E745F78006A3399 /* Build configuration list for PBXNativeTarget "demo" */ = {
+		CFB90E192E746AC800802E0A /* Build configuration list for PBXNativeTarget "demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				CFCB98FA2E745F78006A3399 /* Debug */,
-				CFCB98FB2E745F78006A3399 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CFCB98FC2E745F78006A3399 /* Build configuration list for PBXNativeTarget "demoTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CFCB98FD2E745F78006A3399 /* Debug */,
-				CFCB98FE2E745F78006A3399 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CFCB98FF2E745F78006A3399 /* Build configuration list for PBXNativeTarget "demoUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CFCB99002E745F78006A3399 /* Debug */,
-				CFCB99012E745F78006A3399 /* Release */,
+				CFB90E1A2E746AC800802E0A /* Debug */,
+				CFB90E1B2E746AC800802E0A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CFB90E062E746AC800802E0A /* demoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB90DF82E746AC700802E0A /* demoApp.swift */; };
+		CFB90E082E746AC800802E0A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB90DFA2E746AC700802E0A /* ContentView.swift */; };
+		CFB90E0A2E746AC800802E0A /* CameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB90DFC2E746AC700802E0A /* CameraManager.swift */; };
+		CFB90E0C2E746AC800802E0A /* HandDetectionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB90DFE2E746AC700802E0A /* HandDetectionHelper.swift */; };
+		CFB90E0E2E746AC800802E0A /* SignLanguageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB90E002E746AC700802E0A /* SignLanguageModel.swift */; };
+/* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = CFCB98CE2E745F77006A3399 /* Project object */;
+	rootObject = CFB90DEE2E746AC700802E0A /* Project object */;
 }

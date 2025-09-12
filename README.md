@@ -305,22 +305,23 @@ We've created a complete iOS app with real-time sign language detection:
 # 1. Convert your trained model to Core ML
 python scripts/convert_to_coreml.py \
     --model-path checkpoints/best_model.pth \
-    --output-path ios/SignLanguageDetector/SignLanguageModel.mlmodel \
+    --output-path iOS/demo/SignLanguageModel.mlmodel \
     --optimize
 
 # 2. Open the iOS project
-cd ios/
-open SignLanguageDetector.xcodeproj
+cd iOS/demo
+open demo.xcodeproj
 
-# 3. Build and run on device
-make run-device
+# 3. Build and run in Xcode
+# Select iPhone simulator and press ⌘+R
 ```
 
 **Features:**
 - 🤚 Real-time hand detection using Vision framework
-- 🎯 Core ML-powered ASL recognition
-- 📱 Native iOS experience with camera integration
-- ⚡ Optimized for mobile performance
+- 🎯 Core ML-powered ASL recognition (29 signs)
+- 📱 Beautiful SwiftUI interface with camera integration
+- ⚡ Optimized for mobile performance (5MB model)
+- 🎨 Modern UI with gradients and animations
 
 **See `ios/README.md` for detailed setup instructions.**
 
