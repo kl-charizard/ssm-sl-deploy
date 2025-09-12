@@ -108,18 +108,29 @@ class CameraManager: NSObject, ObservableObject {
 
 extension CameraManager: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
+        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { 
+            print("❌ Failed to get pixel buffer from sample buffer")
+            return 
+        }
+        
+        print("📸 Camera frame captured, processing...")
         
         // Detect hands and crop
         handDetectionHelper?.detectHands(in: pixelBuffer) { [weak self] croppedImage in
-            guard let croppedImage = croppedImage else { return }
+            guard let self = self else { return }
             
-            // Run sign language detection
-            self?.signLanguageModel?.predict(image: croppedImage) { [weak self] prediction, confidence in
-                DispatchQueue.main.async {
-                    self?.detectedSign = prediction
-                    self?.confidence = confidence
+            if let croppedImage = croppedImage {
+                print("✋ Hand detected, using cropped image for detection")
+                // Run sign language detection
+                self.signLanguageModel?.predict(image: croppedImage) { [weak self] prediction, confidence in
+                    print("🎯 Prediction: \(prediction), Confidence: \(confidence)")
+                    DispatchQueue.main.async {
+                        self?.detectedSign = prediction
+                        self?.confidence = confidence
+                    }
                 }
+            } else {
+                print("❌ No hand detected, skipping detection")
             }
         }
     }

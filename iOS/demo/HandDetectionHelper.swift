@@ -24,9 +24,12 @@ class HandDetectionHelper {
             try requestHandler.perform([handPoseRequest])
             
             guard let observation = handPoseRequest.results?.first else {
+                print("❌ No hand pose detected in frame")
                 completion(nil)
                 return
             }
+            
+            print("✋ Hand pose detected, extracting bounding box...")
             
             // Extract hand bounding box from keypoints
             let boundingBox = getHandBoundingBox(from: observation, in: pixelBuffer)
@@ -34,10 +37,17 @@ class HandDetectionHelper {
             
             // Crop hand region
             let croppedImage = cropHandRegion(from: image, boundingBox: boundingBox)
+            
+            if croppedImage != nil {
+                print("✅ Hand region cropped successfully")
+            } else {
+                print("❌ Failed to crop hand region")
+            }
+            
             completion(croppedImage)
             
         } catch {
-            print("Hand detection error: \(error)")
+            print("❌ Hand detection error: \(error)")
             completion(nil)
         }
     }

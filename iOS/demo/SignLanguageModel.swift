@@ -67,21 +67,30 @@ class SignLanguageModel {
     
     func predict(image: UIImage, completion: @escaping (String, Double) -> Void) {
         guard let model = model else {
+            print("❌ Model not loaded for prediction")
             completion("Model not loaded", 0.0)
             return
         }
         
+        print("🔍 Starting prediction on image...")
+        
         // Resize image to 224x224 (model input size)
         guard let resizedImage = resizeImage(image, to: CGSize(width: 224, height: 224)) else {
+            print("❌ Failed to resize image")
             completion("Image resize failed", 0.0)
             return
         }
         
+        print("✅ Image resized to 224x224")
+        
         // Convert UIImage to CVPixelBuffer
         guard let pixelBuffer = imageToPixelBuffer(resizedImage) else {
+            print("❌ Failed to convert image to pixel buffer")
             completion("Pixel buffer conversion failed", 0.0)
             return
         }
+        
+        print("✅ Image converted to pixel buffer, running inference...")
         
         do {
             let input = try MLDictionaryFeatureProvider(dictionary: ["image": MLFeatureValue(pixelBuffer: pixelBuffer)])
@@ -92,8 +101,10 @@ class SignLanguageModel {
                let confidence = prediction.featureValue(for: "classLabelProbs")?.multiArrayValue {
                 
                 let maxConfidence = getMaxConfidence(from: confidence)
+                print("🎯 Model prediction: \(output) (confidence: \(maxConfidence))")
                 completion(output, maxConfidence)
             } else {
+                print("❌ Failed to extract prediction results")
                 completion("Prediction failed", 0.0)
             }
             
